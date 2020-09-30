@@ -28,7 +28,7 @@ var chosenXAxis = "poverty"
 var chosenYAxis = "obesity"
 
 
-//function for updating the x-scale variable upon click on axis label
+//function for updating the x-scale variable upon click on x-axis label
 function xScale(newsData, chosenXAxis){
     
     var xLinearScale = d3.scaleLinear()
@@ -40,7 +40,7 @@ function xScale(newsData, chosenXAxis){
   return xLinearScale;
 }
 
-//function for updating the y-scale variable upon click on axis label
+//function for updating the y-scale variable upon click on y-axis label
 function yScale(newsData, chosenYAxis){
 
     var yLinearScale = d3.scaleLinear()
@@ -50,7 +50,7 @@ function yScale(newsData, chosenYAxis){
   return yLinearScale;
 }
 
-//function used for updating xAxis variable upon click on axis label 
+//function used for updating xAxis variable upon click on x-axis label 
 function renderXAxes(newXScale, xAxis) {
 
     var bottomAxis = d3.axisBottom(newXScale);
@@ -62,7 +62,7 @@ function renderXAxes(newXScale, xAxis) {
     return xAxis;
 }
 
-//function used for updating yAxis variable upon click on axis label
+//function used for updating yAxis variable upon click on y-axis label
 function renderYAxes(newYScale, yAxis) {
 
     var leftAxis = d3.axisLeft(newYScale);
@@ -91,13 +91,13 @@ function renderCircleText(stateTextGroup, newXScale, newYScale, chosenXAxis, cho
     stateTextGroup.transition()
         .duration(1000)
         .attr("x", d => newXScale(d[chosenXAxis]))
-        .attr("y", d => newYScale(d[chosenYAxis]));
+        .attr("y", d => newYScale(d[chosenYAxis])+6);
 
     return stateTextGroup;
 }
 
 //function used for updating circles group with new tooltip
-function updateToolTip(chosenXAxis, chosenYAxis, circlesGroup) {
+function updateToolTip(chosenXAxis, chosenYAxis, circlesGroup, stateTextGroup) {
 
     var xLabel;
 
@@ -131,7 +131,7 @@ function updateToolTip(chosenXAxis, chosenYAxis, circlesGroup) {
         .style("padding", "6px")
         .style("font-size", "12px")
         .style("text-align", "center")
-        .offset([80,-60])
+        .offset([0,50])
         .html(function(d) {
             return (`${d.state}<br>${xLabel}: ${d[chosenXAxis]}<br>${yLabel}: ${d[chosenYAxis]}`);
         });
@@ -139,13 +139,19 @@ function updateToolTip(chosenXAxis, chosenYAxis, circlesGroup) {
     circlesGroup.call(toolTip);
 
     circlesGroup.on("mouseover", function(data) {
-        toolTip.show(data);
+        toolTip.show(data,this);
     })
-        
-        .on("mouseout", function(data, index) {
-            toolTip.hide(data);
+        .on("mouseout", function(data){
+            toolTip.hide(data,this);
         });
-    
+
+    stateTextGroup.on("mouseover", function(data) {
+        toolTip.show(data,this)
+    })
+        .on("mouseout", function(data) {
+            toolTip.hide(data,this);
+    });
+
     return circlesGroup;
 }
 
@@ -207,7 +213,7 @@ d3.csv("assets/data/data.csv").then(function(newsData, err){
             .attr("y", d => yLinearScale(d[chosenYAxis])+6)
             .classed("stateText", true)
 
-    //create group for three x-axis labels
+    //create group for three x-axis labels and three y-axis labels
     var labelsGroup = chartGroup.append("g")
             .attr("transform", `translate(${width / 2}, ${height +20})`);
 
@@ -265,7 +271,7 @@ d3.csv("assets/data/data.csv").then(function(newsData, err){
 
     //updateToolTip function from above function list
 
-    var circlesGroup = updateToolTip(chosenXAxis, chosenYAxis, circlesGroup);
+    var circlesGroup = updateToolTip(chosenXAxis, chosenYAxis, circlesGroup, stateTextGroup);
 
 
 //labels event listener
@@ -373,7 +379,7 @@ d3.csv("assets/data/data.csv").then(function(newsData, err){
             }
             circlesGroup = renderCircles(circlesGroup, xLinearScale, yLinearScale, chosenXAxis, chosenYAxis);  
 
-            circlesGroup = updateToolTip(chosenXAxis, chosenYAxis, circlesGroup);
+            circlesGroup = updateToolTip(chosenXAxis, chosenYAxis, circlesGroup, stateTextGroup);
 
             stateTextGroup = renderCircleText(stateTextGroup, xLinearScale, yLinearScale, chosenXAxis, chosenYAxis)
         });
