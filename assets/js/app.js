@@ -157,7 +157,6 @@ function updateToolTip(chosenXAxis, chosenYAxis, circlesGroup, stateTextGroup) {
 
 
 //retrieve data from the CSV file and execute everything below
-
 d3.csv("assets/data/data.csv").then(function(newsData, err){
     if(err) throw err;
 
@@ -212,6 +211,7 @@ d3.csv("assets/data/data.csv").then(function(newsData, err){
             .attr("x", d => xLinearScale(d[chosenXAxis]))
             .attr("y", d => yLinearScale(d[chosenYAxis])+6)
             .classed("stateText", true)
+
 
     //create group for three x-axis labels and three y-axis labels
     var labelsGroup = chartGroup.append("g")
@@ -279,8 +279,6 @@ d3.csv("assets/data/data.csv").then(function(newsData, err){
         .on("click", function() {
 
             var value = d3.select(this).attr("value");
-
-            // var yValue = d3.select(this).attr("value");
 
             if (value == "poverty"  || value == "age" || value =="income") {
                 chosenXAxis = value;
@@ -387,3 +385,193 @@ d3.csv("assets/data/data.csv").then(function(newsData, err){
 }).catch(function(error) {
     console.log(error);
 });
+
+
+
+
+
+//=================================================================================================================================
+//attempting write the code with two different label groups.
+
+
+//     var xLabelsGroup = chartGroup.append("g")
+//             .attr("transform", `translate(${width / 2}, ${height +20})`);
+
+//     var povertyLabel = xLabelsGroup.append("text")
+//             .attr("x", 0)
+//             .attr("y", 20)
+//             .attr("value", "poverty") // value to grab for event listener
+//             .classed("active", true)
+//             .text("In Poverty (%)");
+
+//     var ageLabel = xLabelsGroup.append("text")
+//             .attr("x", 0)
+//             .attr("y", 40)
+//             .attr("value", "age") // value to grab for event listener
+//             .classed("inactive", true)
+//             .text("Age (Median)");
+
+//     var incomeLabel =xLabelsGroup.append("text")
+//             .attr("x", 0)
+//             .attr("y", 60)
+//             .attr("value", "income") // value to grab for event listener
+//             .classed("inactive", true)
+//             .text("Household Income (Median)");
+
+    
+//     var yLabelsGroup = chartGroup.append("g")
+//             .attr("transform", `translate(${width / 2}, ${height +20})`);
+
+//     var obesityLabel = labelsGroup.append("text")
+//             .attr("transform", "rotate(-90)")
+//             .attr("y", margin.left - 580)
+//             .attr("x", (height - 200))
+//             .attr("value", "obesity") // value to grab for event listener
+//             .attr("dy", "1em")
+//             .classed("active", true)
+//             .classed("aText", true)
+//             .text("Obese (%)")
+            
+//     var smokesLabel = labelsGroup.append("text")
+//             .attr("transform", "rotate(-90)")
+//             .attr("y", margin.left - 560)
+//             .attr("x", (height - 200))
+//             .attr("value", "smokes") // value to grab for event listener
+//             .attr("dy", "1em")
+//             .classed("inactive", true)
+//             .classed("aText", true)
+//             .text("Smokes (%)")
+            
+//     var healthcareLabel = labelsGroup.append("text")
+//             .attr("transform", "rotate(-90)")  
+//             .attr("y", margin.left - 540)
+//             .attr("x", (height - 200))
+//             .attr("value", "healthcare") // value to grab for event listener
+//             .attr("dy", "1em")
+//             .classed("inactive", true)
+//             .classed("aText", true)
+//             .text("Lacks Healthcare (%)")
+            
+            
+//     //updateToolTip function from above function list
+            
+//     var circlesGroup = updateToolTip(chosenXAxis, chosenYAxis, circlesGroup, stateTextGroup);
+
+//     xLabelsGroup.selectAll("text")
+//         .on("click", function() {
+
+//             chosenXAxis = d3.select(this).attr("value");
+
+//             // if (value == "poverty"  || value == "age" || value =="income") {
+//             //     chosenXAxis = value;
+
+//                 xLinearScale = xScale(newsData, chosenXAxis);
+
+//                 xAxis = renderXAxes(xLinearScale, xAxis);
+
+//                 if (chosenXAxis === "poverty") {
+//                     povertyLabel
+//                         .classed("active", true)
+//                         .classed("inactive", false);
+
+//                     ageLabel
+//                         .classed("active", false)
+//                         .classed("inactive", true);
+
+//                     incomeLabel
+//                         .classed("active", false)
+//                         .classed("inactive", true);
+//                 }
+//                 else if (chosenXAxis === "age") {
+//                     povertyLabel
+//                         .classed("active", false)
+//                         .classed("inactive", true);
+
+//                     ageLabel
+//                         .classed("active", true)
+//                         .classed("inactive", false);
+
+//                     incomeLabel
+//                         .classed("active", false)
+//                         .classed("inactive", true);
+//                 }
+//                 else {
+//                     povertyLabel
+//                         .classed("active", false)
+//                         .classed("inactive", true);
+
+//                     ageLabel
+//                         .classed("active", false)
+//                         .classed("inactive", true);
+
+//                     incomeLabel
+//                         .classed("active", true)
+//                         .classed("inactive", false);
+//                 }
+//         });
+
+
+//     yLabelsGroup.selectAll("text")
+//         .on("click", function() {
+
+//             chosenYAxis = value;
+
+//                 yLinearScale = yScale(newsData, chosenYAxis);
+            
+//                 yAxis = renderYAxes(yLinearScale, yAxis);
+            
+//                 if (chosenYAxis === "obesity") {
+//                     obesityLabel
+//                         .classed("active", true)
+//                         .classed("inactive", false);
+            
+//                     smokesLabel
+//                         .classed("active", false)
+//                         .classed("inactive", true);
+            
+//                     healthcareLabel
+//                         .classed("active", false)
+//                         .classed("inactive", true);
+//                 }
+//                 else if (chosenYAxis === "smokes") {
+//                     obesityLabel
+//                         .classed("active", false)
+//                         .classed("inactive", true);
+            
+//                     smokesLabel
+//                         .classed("active", true)
+//                         .classed("inactive", false);
+            
+//                     healthcareLabel
+//                         .classed("active", false)
+//                         .classed("inactive", true);
+//                 }
+//                 else {
+//                     obesityLabel
+//                         .classed("active", false)
+//                         .classed("inactive", true);
+            
+//                     smokesLabel
+//                         .classed("active", false)
+//                         .classed("inactive", true);
+            
+//                     healthcareLabel
+//                         .classed("active", true)
+//                         .classed("inactive", false);
+//                 }
+
+//                 circlesGroup = renderCircles(circlesGroup, xLinearScale, yLinearScale, chosenXAxis, chosenYAxis);  
+
+//                 circlesGroup = updateToolTip(chosenXAxis, chosenYAxis, circlesGroup, stateTextGroup);
+
+//                 stateTextGroup = renderCircleText(stateTextGroup, xLinearScale, yLinearScale, chosenXAxis, chosenYAxis)
+                        
+//         });
+
+//         }).catch(function(error) {
+//     console.log(error);
+// });
+
+
+//============================================================================================================================================
+
