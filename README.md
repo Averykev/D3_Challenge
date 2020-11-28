@@ -1,5 +1,7 @@
 # D3_Challenge
 
+INSTRUCTIONS:  To view this project just visit https://averykev.github.io/D3_Challenge/
+
 Data Journalism and D3:
 
 1.)  This project uses D3 in order to create a data visualization that has three different x-axis variables and three different y-axis variables that are 
