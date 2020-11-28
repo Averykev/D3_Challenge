@@ -1,8 +1,8 @@
 # D3_Challenge
 
-SUMMARY:
+Data Journalism and D3:
 
-1.)  This D3 challenge uses D3 in order to create a data visualization that has three different x-axis variables and three different y-axis variables that are 
+1.)  This project uses D3 in order to create a data visualization that has three different x-axis variables and three different y-axis variables that are 
 selectable.  There are 9 different combinations of potential visualizations.
 
 2.)  I created several functions to render the x & y axes, render the circles and the text inside the circles, and the tool tip for when you hover over the circles.
